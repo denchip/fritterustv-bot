@@ -6,7 +6,9 @@ class Query(models.Model):
     Query
     """
 
-    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    title = models.CharField(max_length=255, verbose_name='Заголовок (если запрос без текста)')
+    title_pattern = models.CharField(max_length=255,
+                                     verbose_name='Шаблон заголовка (текст запроса помечается как {text})')
     image = models.FileField(upload_to='media/', verbose_name='Картинка', null=True, blank=True)
     description = models.CharField(max_length=255, verbose_name='Описание')
 
