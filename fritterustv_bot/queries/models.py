@@ -10,6 +10,7 @@ class Query(models.Model):
     title_pattern = models.CharField(max_length=255,
                                      verbose_name='Шаблон заголовка (текст запроса помечается как {text})')
     image = models.FileField(upload_to='media/', verbose_name='Картинка', null=True, blank=True)
+    is_daily = models.BooleanField(default=False, verbose_name='У запроса одинаковый результат раз в день')
     description = models.CharField(max_length=255, verbose_name='Описание')
 
     class Meta:
