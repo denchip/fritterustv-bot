@@ -16,14 +16,14 @@ services:
             - DB_USER=${DB_USER}
             - DB_PASSWORD=${DB_PASSWORD}
             - DJANGO_SETTINGS_MODULE=config.settings.prod
-        command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --log-file logs/gunicorn-error.log
+        command: gunicorn config.wsgi:application --bind 0.0.0.0:8080 --log-file logs/gunicorn-error.log
         volumes:
             - .:/app
             - ./static:/app/static/
         depends_on:
             - db
         ports:
-            - "8000:8000"
+            - "8080:8080"
         restart: always
     bot:
         container_name: fritterustv_bot_bot

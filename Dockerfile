@@ -27,5 +27,5 @@ RUN pip install --no-cache-dir -r requirements/prod.txt
 COPY . .
 
 # start bot
-EXPOSE 8000
+EXPOSE 8080
 CMD ["python3", "manage.py", "runbot"]

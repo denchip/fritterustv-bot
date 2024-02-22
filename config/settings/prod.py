@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True
+DEBUG = False
 
 # you should put your host here if you think set in production the web app
 ALLOWED_HOSTS = ["*"]
