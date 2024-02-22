@@ -14,7 +14,7 @@ def inline_query(update: Update, context) -> None:
     results = []
     for query in queries:
         hash_string = f"{update.inline_query.from_user.id}{timezone.now().date()}"
-        unique_daily_hash = int(hash(hash_string))
+        unique_daily_hash = int(hash(f"{hash_string}{query_text}"))
         query_answers = list(QueryAnswer.objects.filter(query=query))
         if query.is_daily:
             answer = query_answers[unique_daily_hash % len(query_answers)]
