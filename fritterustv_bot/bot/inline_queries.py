@@ -10,12 +10,10 @@ import random
 
 def inline_query(update: Update, context) -> None:
     query_text = update.inline_query.query
-    print(update.inline_query)
     queries = Query.objects.all()
     results = []
     for query in queries:
         hash_string = f"{update.inline_query.from_user.id}{timezone.now().date()}"
-        print(hash_string)
         unique_daily_hash = int(hash(hash_string))
         query_answers = list(QueryAnswer.objects.filter(query=query))
         if query.is_daily:
@@ -25,13 +23,16 @@ def inline_query(update: Update, context) -> None:
         if query_text:
             answer_text = format_string(pattern=answer.pattern, text=query_text, unique_hash=unique_daily_hash)
             answer_title = format_string(pattern=query.title_pattern, text=query_text, unique_hash=unique_daily_hash)
+            answer_description = format_string(pattern=query.description_pattern, text=query_text,
+                                               unique_hash=unique_daily_hash)
         else:
             answer_text = answer.clean_text
             answer_title = query.title
+            answer_description = query.description
         results.append(InlineQueryResultArticle(
             id=str(uuid4()),
             title=answer_title,
-            description=query.description,
+            description=answer_description,
             input_message_content=InputTextMessageContent(answer_text),
         ))
     update.inline_query.answer(results, cache_time=0)
