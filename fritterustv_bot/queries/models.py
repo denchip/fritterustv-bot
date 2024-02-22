@@ -7,7 +7,7 @@ class Query(models.Model):
     """
 
     title = models.CharField(max_length=255, verbose_name='Заголовок')
-    image = models.FileField(upload_to='media/', verbose_name='Картинка')
+    image = models.FileField(upload_to='media/', verbose_name='Картинка', null=True, blank=True)
     description = models.CharField(max_length=255, verbose_name='Описание')
 
     class Meta:
