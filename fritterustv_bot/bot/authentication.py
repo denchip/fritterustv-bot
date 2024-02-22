@@ -14,7 +14,7 @@ def authenticate(chat):
 
     # anonymous
     if chat.username is not None:
-        if chat.username  == 'GroupAnonymousBot':
+        if chat.username == 'GroupAnonymousBot':
             return None, True
 
     # not anonymous

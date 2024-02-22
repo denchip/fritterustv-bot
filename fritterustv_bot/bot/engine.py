@@ -9,14 +9,14 @@ from telegram.ext import (
     Updater,
     CommandHandler,
     CallbackQueryHandler,
+    InlineQueryHandler,
     MessageHandler,
-    ConversationHandler,
     Filters,
 )
 from python_telegram_bot_django_persistence.persistence import DjangoPersistence
 from django.conf import settings
 
-from . import commands, callbacks, conversation, constants, messages, models
+from . import commands, callbacks, constants, messages, inline_queries, models
 
 
 class Bot(object):
@@ -36,20 +36,10 @@ class Bot(object):
     }
 
     """
-    Add your conversation entry points and states here, placing them on `conversation.py`.
+    Add your inline query handlers here, placing them on `inline_queries.py`.
     """
-    conversation = {
-        'entry_points': {
-            'command_handlers': {
-                'cancel': commands.cancel,
-            },
-            'callback_query_handlers': {
-                'feedback': conversation.input_feedback
-            }
-        },
-        'states': {
-            constants.INPUT_FEEDBACK: conversation.input_feedback,
-        }
+    inline_query_handlers = {
+        'inline_query': inline_queries.inline_query,
     }
 
     """
@@ -77,33 +67,13 @@ class Bot(object):
         for key, value in self.callback_query_handlers.items():
             dp.add_handler(CallbackQueryHandler(value, pattern=key))
 
-        # Init conversation
-        entry_points = []
-
-        handlers = self.conversation['entry_points']['command_handlers']
-        for key, value in handlers.items():
-            entry_points.append(CommandHandler(key, value))
-
-        handlers = self.conversation['entry_points']['callback_query_handlers']
-        for key, value in handlers.items():
-            entry_points.append(CallbackQueryHandler(value, pattern=key))
-
-        states = {}
-        handlers = self.conversation['states']
-        for key, value in handlers.items():
-            states[key] = [MessageHandler(Filters.text, value)]
-
-        dp.add_handler(
-            ConversationHandler(
-                entry_points=entry_points,
-                states=states,
-                fallbacks=[]
-            )
-        )
+        # Init inline query handlers
+        for key, value in self.inline_query_handlers.items():
+            dp.add_handler(InlineQueryHandler(value))
 
         # Init filters
-        for filter, callback in self.message_handlers:
-            dp.add_handler(MessageHandler(filter, callback))
+        for message_filter, callback in self.message_handlers:
+            dp.add_handler(MessageHandler(message_filter, callback))
 
     def error_handler(self, update, context):
         """
@@ -119,8 +89,7 @@ class Bot(object):
         """
         Handle the traffic of your bot with polling technique or define a webhook.
         """
-        self.updater.start_polling()
+        self.updater.start_polling(allowed_updates=telegram.Update.ALL_TYPES)
 
         print('[BOT] Running at https://t.me/{}'.format(self.bot.username))
-
         self.updater.idle()

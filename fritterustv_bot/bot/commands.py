@@ -13,15 +13,5 @@ from telegram.ext import ConversationHandler
 def start(update, context):
 
     update.message.reply_text(
-        text='Hello!'
+        text='Этот бот предназначен для уморительного времяпрепровождения в чате канала https://t.me/fritterustv'
     )
-
-
-# Example: /cancel
-def cancel(update, context):
-
-    update.message.reply_text(
-        text='The action is cancelled.'
-    )
-
-    return ConversationHandler.END
