@@ -42,6 +42,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'fritterustv_bot.queries.apps.QueriesConfig',
     'fritterustv_bot.core.apps.CoreConfig',
     'fritterustv_bot.accounts.apps.AccountsConfig',
     'fritterustv_bot.bot.apps.BotConfig',

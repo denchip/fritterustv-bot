@@ -5,26 +5,7 @@
 
 # Open source
 * License: MIT license
-* Documentation: https://fritterustv-bot.readthedocs.io.
 
-
-## Start developing your bot 💻
-
-🤖 Welcome to your new bot. You have successfully generated your bot structure using `ptb-django-cookiecutter`.
-
-Before you start creating your bot, you need to understand the bot structure:
-
-* `src/bot`: The bot source code.
-    * `core`:
-        * `authentication.py`: The authentication mechanism.
-        * `callbacks.py`: Your callbacks here.
-        * `commands.py`: Your commands here.
-        * `constants.py`: Your conversation states, defined as constants.
-        * `conversation.py`: Your conversation callbacks.
-        * `engine.py`: The bot engine.
-        * `messages.py`: The message filter callbacks.
-        * `models.py`: Your bot models, defined as Django model classes.
-        * `renderers.py`: Methods to render your messages.
 
 ## Install your bot dependencies 📦
 
@@ -38,7 +19,7 @@ You have two primary options to install de bot Python dependencies: pip or Poetr
     poetry install
     ```
 
-✨ **Tip (optional):** Create these aliases on on your `.bashrc` or `.zshrc`, like this
+✨ **Tip (optional):** Create these aliases on your `.bashrc` or `.zshrc`, like this
 
     ```
     alias poetry="python3 -m poetry"
@@ -74,18 +55,4 @@ Or using Poetry:
 Or using Python:
 
     python3 dev.py runbot
-
-## Deploy your bot 🚀
-
-Clone your repo to the server, and create this folder structure:
-
-* `codebase`: The repo itself, the source code.
-* `storage`: The place to store the DB and other persistant files.
-
-Create and fill the `./codebase/.env` file with the environment vars.
-
-Then, deploy, using `docker-compose`:
-
-    cd codebase
-    docker-compose up --build -d
 
