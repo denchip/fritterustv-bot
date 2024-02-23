@@ -38,6 +38,8 @@ services:
             - DB_PASSWORD=${DB_PASSWORD}
             - DJANGO_SETTINGS_MODULE=config.settings.prod
         command: python3 manage.py runbot
+        volumes:
+            - .:/app
         depends_on:
             - web
         restart: always
