@@ -33,10 +33,13 @@ def inline_query(update: Update, context) -> None:
             answer_title = format_string(pattern=query.title, text=query_text, unique_hash=unique_daily_hash)
             answer_description = format_string(pattern=query.description, text=query_text,
                                                unique_hash=unique_daily_hash)
-        results.append(InlineQueryResultArticle(
-            id=str(uuid4()),
-            title=answer_title,
-            description=answer_description,
-            input_message_content=InputTextMessageContent(answer_text),
-        ))
+        if answer:
+            results.append(InlineQueryResultArticle(
+                id=str(uuid4()),
+                title=answer_title,
+                description=answer_description,
+                input_message_content=InputTextMessageContent(answer_text),
+            ))
+        else:
+            pass
     update.inline_query.answer(results, cache_time=0)
